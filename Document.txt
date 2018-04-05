@@ -1,0 +1,78 @@
+what is the difference between compile and link( conroll,pre, post) 
+
+
+transclusion:-
+how may ways to implement transclude 
+using with translude = true along wih
+1)ng-transclude atribut
+2) using with link
+3) directive controller
+4) custom transclude - (my-translude- any name)
+
+transclusion scopes:- 
+How many ways avalable scopes
+
+controller level scopes
+directive level scopes
+transclude level scopes
+
+1)shared scope (transclude:true) controller and directive scope ids are same and transclution id is different always. can access $parent scopes from controlled scope
+2)inheried scope (transclude:true, scope:true) which means directive level have own scope object 3 scope id are different, can access $parent from directive scopes
+3)isolated scope (trasnclude:true,scope:{}) there is no relation between controller and directive scopes, we can not access controller scope into directive scopes, and can acces its own directive scope values only. also transclustion 
+4)custom  scope
+ - clone linking function: using clone linking function can access transclution scope directly which means custome transclutions scope to be created and send to across using with create customScope.
+- var customSCope = $scope.$new(true); - means new custome scope create with currsponding isolated scope.
+ 
+Services:
+special unit of code which can be used across different controllers, services can be utilities or business logic units.
+services are singleton which means instantiated only once. services are lazily loaded. services can work with other services too. can reuse and shared across multiple services and multiple controlles.
+
+Built in services:
+developed by angular framework
+$http, $log, $location etc.
+
+Custom services:
+Develped by us
+Can use build in servers as per of requirements.
+can implement business logics with communicate with webservices using $http service calls.
+
+3 Types of serives:-
+1) Factory:-
+it is very similar to factory pattern.
+in the factory we need to create object and return the object
+syntex: app.factory("factoryName",function(){
+	var calcServ = {};
+	 calcServ.doSome = function(){
+		// code
+	}
+	return calcServ;
+});
+using with return fucntion - in factory.
+
+
+2) Service:- this is very similar to factory and bit of different. in case of
+we are not going to create the object just going to the diffine structure of the objct, services object is instantiated automatically by angularjs. that means syntactically differnce for both factory and services but not all other diffrences.
+syntex: app.service("serviceName",function(){
+	this.doSome = function(){ }
+});
+Using with this.function -in services
+3) Provider:- A provider is an object with a $get() method. The injector calls the $get method to create a new instance of a service. The Provider can have additional methods which would allow for configuration of the provider. AngularJS uses $provide to register new providers
+configuration provide for the service, excuted during 'config' stage 
+syntex: app.provider('calcServ',function(){
+
+this.config = function(url){
+	// code
+};
+this.$get = function(){
+	
+	var calcServ = {};
+	 calcServ.doSome = function(){
+		// code
+	}
+	return calcServ;
+}
+
+});
+app.config(['calcServicProvider', function(calcprovider){
+calcprovider.config('http://localhost:4467');
+}]);
